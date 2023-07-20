@@ -22,9 +22,7 @@ function sendUTMParamsToAPI(utmParams) {
     // Perform API call to send the UTM parameters
     fetch(apiEndpoint,{
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: {},
         body: JSON.stringify(utmParams),
     })
         .then(response => {
