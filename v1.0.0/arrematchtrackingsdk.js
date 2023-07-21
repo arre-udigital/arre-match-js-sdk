@@ -20,30 +20,30 @@
     }
 
     // Function to send UTM parameters to API endpoint
-    function sendUTMParamsToAPI(utmParams) {
-        var apiEndpoint = '';
+    // function sendUTMParamsToAPI(utmParams) {
+    //     var apiEndpoint = '';
 
-        var xhr = new XMLHttpRequest();
+    //     var xhr = new XMLHttpRequest();
 
-        xhr.open('POST',apiEndpoint,true);
+    //     xhr.open('POST',apiEndpoint,true);
 
-        xhr.setRequestHeader('Content-Type','application/json');
+    //     xhr.setRequestHeader('Content-Type','application/json');
 
-        // Handle the response
-        xhr.onload = function () {
-            if (xhr.status >= 200 && xhr.status < 300) {
-                console.log('UTM parameters sent successfully!');
-            } else {
-                console.error('Error sending UTM parameters:',xhr.status,xhr.statusText);
-            }
-        };
+    //     // Handle the response
+    //     xhr.onload = function () {
+    //         if (xhr.status >= 200 && xhr.status < 300) {
+    //             console.log('UTM parameters sent successfully!');
+    //         } else {
+    //             console.error('Error sending UTM parameters:',xhr.status,xhr.statusText);
+    //         }
+    //     };
 
-        xhr.onerror = function () {
-            console.error('Error sending UTM parameters: Request failed');
-        };
+    //     xhr.onerror = function () {
+    //         console.error('Error sending UTM parameters: Request failed');
+    //     };
 
-        xhr.send(JSON.stringify(utmParams));
-    }
+    //     xhr.send(JSON.stringify(utmParams));
+    // }
 
     function trackUTMParameters() {
         var utmParams = getUTMParams(window.location.search);
