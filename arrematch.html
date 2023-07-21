@@ -1,0 +1,21 @@
+<!-- test.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Test SDK</title>
+</head>
+
+<body>
+  <script src="https://www.arrevoice.com/v1.0.0/arrematchtrackingsdk.js"></script>
+  <script>
+    SDKName.push(function () {
+      var utmParams = getUTMParams(window.location.search);
+      console.log('UTM parameters:',utmParams);
+
+      sendUTMParamsToAPI(utmParams);
+    });
+  </script>
+</body>
+
+</html>

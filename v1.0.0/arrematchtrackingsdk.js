@@ -1,50 +1,72 @@
+(function () {
+    // namespace
+    var SDKName = window.SDKName || (window.SDKName = []);
 
-// Define the namespace
-var arrematch = window.arrematch || (window.arrematch = []);
+    // Function to extract UTM parameters from the URL
+    function getUTMParams(url) {
+        var params = {};
+        var searchParams = new URLSearchParams(url);
+        params.utm_source = searchParams.get("utm_source");
+        params.utm_medium = searchParams.get("utm_medium");
+        params.utm_campaign = searchParams.get("utm_campaign");
+        params.utm_term = searchParams.get("utm_term");
+        params.utm_content = searchParams.get("utm_content");
+        return params;
+    }
 
-// Function to extract UTM parameters from the URL
-function getUTMParams(url) {
-    console.log(url," === url")
-    var params = {};
-    var searchParams = new URLSearchParams(url);
-    params.utm_source = searchParams.get("utm_source");
-    params.utm_medium = searchParams.get("utm_medium");
-    params.utm_campaign = searchParams.get("utm_campaign");
-    params.utm_term = searchParams.get("utm_term");
-    params.utm_content = searchParams.get("utm_content");
-    return params;
-}
+    // Function to log UTM parameters to the console
+    function logUTMParamsToConsole(utmParams) {
+        console.log('UTM parameters:',utmParams);
+    }
 
-// Function to send UTM parameters to API endpoint
-function sendUTMParamsToAPI(utmParams) {
-    var apiEndpoint = 'API_ENDPOINT_URL';
+    // Function to send UTM parameters to API endpoint
+    function sendUTMParamsToAPI(utmParams) {
+        var apiEndpoint = '';
 
-    // Perform API call to send the UTM parameters
-    fetch(apiEndpoint,{
-        method: 'POST',
-        headers: {},
-        body: JSON.stringify(utmParams),
-    })
-        .then(response => {
-            // Handle the API response if needed
-            console.log('UTM parameters sent successfully!');
-        })
-        .catch(error => {
-            // Handle API call errors if needed
-            console.error('Error sending UTM parameters:',error);
-        });
-}
+        var xhr = new XMLHttpRequest();
 
-// Function to track UTM parameters and send them to API
-function trackUTMParameters() {
-    var utmParams = getUTMParams(window.location.search);
-    console.log(utmParams);
+        xhr.open('POST',apiEndpoint,true);
 
-    // Send the UTM parameters to the API endpoint
-    sendUTMParamsToAPI(utmParams);
-}
+        xhr.setRequestHeader('Content-Type','application/json');
 
-// Execute the SDK code asynchronously using the queue event
-arrematch.push(function () {
-    trackUTMParameters();
+        // Handle the response
+        xhr.onload = function () {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                console.log('UTM parameters sent successfully!');
+            } else {
+                console.error('Error sending UTM parameters:',xhr.status,xhr.statusText);
+            }
+        };
+
+        xhr.onerror = function () {
+            console.error('Error sending UTM parameters: Request failed');
+        };
+
+        xhr.send(JSON.stringify(utmParams));
+    }
+
+    function trackUTMParameters() {
+        var utmParams = getUTMParams(window.location.search);
+        logUTMParamsToConsole(utmParams);
+        sendUTMParamsToAPI(utmParams);
+    }
+
+    function initializeSDK() {
+        while (SDKName.q.length > 0) {
+            var event = SDKName.q.shift();
+            if (event && typeof event === 'function') {
+                event();
+            }
+        }
+
+        trackUTMParameters();
+    }
+
+    SDKName.push(initializeSDK);
+})();
+
+document.addEventListener('DOMContentLoaded',function () {
+    SDKName.push(function () {
+        initializeSDK();
+    });
 });
