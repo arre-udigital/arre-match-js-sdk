@@ -12,8 +12,8 @@
     SDKName.push(function () {
       var utmParams = getUTMParams(window.location.search);
       console.log('UTM parameters:',utmParams);
-
-      sendUTMParamsToAPI(utmParams);
+      logUTMParamsToConsole(utmParams);
+      //sendUTMParamsToAPI(utmParams);
     });
   </script>
 </body>

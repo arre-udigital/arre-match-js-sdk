@@ -48,7 +48,7 @@
     function trackUTMParameters() {
         var utmParams = getUTMParams(window.location.search);
         logUTMParamsToConsole(utmParams);
-        sendUTMParamsToAPI(utmParams);
+        // sendUTMParamsToAPI(utmParams);
     }
 
     function initializeSDK() {
