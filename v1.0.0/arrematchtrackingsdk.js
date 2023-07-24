@@ -19,38 +19,13 @@
         console.log('UTM parameters:',utmParams);
     }
 
-    // Function to send UTM parameters to API endpoint
-    // function sendUTMParamsToAPI(utmParams) {
-    //     var apiEndpoint = '';
-
-    //     var xhr = new XMLHttpRequest();
-
-    //     xhr.open('POST',apiEndpoint,true);
-
-    //     xhr.setRequestHeader('Content-Type','application/json');
-
-    //     // Handle the response
-    //     xhr.onload = function () {
-    //         if (xhr.status >= 200 && xhr.status < 300) {
-    //             console.log('UTM parameters sent successfully!');
-    //         } else {
-    //             console.error('Error sending UTM parameters:',xhr.status,xhr.statusText);
-    //         }
-    //     };
-
-    //     xhr.onerror = function () {
-    //         console.error('Error sending UTM parameters: Request failed');
-    //     };
-
-    //     xhr.send(JSON.stringify(utmParams));
-    // }
-
+    // Function to track UTM parameters and log them to console
     function trackUTMParameters() {
         var utmParams = getUTMParams(window.location.search);
         logUTMParamsToConsole(utmParams);
-        // sendUTMParamsToAPI(utmParams);
     }
 
+    // Function to process queued events and initialize the SDK
     function initializeSDK() {
         while (SDKName.q.length > 0) {
             var event = SDKName.q.shift();
@@ -64,9 +39,3 @@
 
     SDKName.push(initializeSDK);
 })();
-
-document.addEventListener('DOMContentLoaded',function () {
-    SDKName.push(function () {
-        initializeSDK();
-    });
-});
