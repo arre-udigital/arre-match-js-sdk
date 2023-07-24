@@ -37,6 +37,5 @@
         trackUTMParameters();
     }
 
-    // Initialize the SDK
-    initializeSDK();
+    SDKName.push(initializeSDK);
 })();
