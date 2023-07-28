@@ -4,6 +4,7 @@
 
     // Function to extract UTM parameters from the URL
     function getUTMParams(url) {
+        console.log(url," === url")
         var params = {};
         var searchParams = new URLSearchParams(url);
         params.utm_source = searchParams.get("utm_source");
@@ -11,6 +12,7 @@
         params.utm_campaign = searchParams.get("utm_campaign");
         params.utm_term = searchParams.get("utm_term");
         params.utm_content = searchParams.get("utm_content");
+        console.log(params," === param")
         return params;
     }
 
