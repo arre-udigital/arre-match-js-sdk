@@ -1,8 +1,9 @@
 (function () {
-    var SDKName = window.SDKName || (window.SDKName = []);
+    // Create the arrematch namespace if it doesn't exist
+    var arrematch = window.arrematch || {};
 
+    // Function to extract UTM parameters from the URL
     function getUTMParams(url) {
-        console.log(url," === url")
         var params = {};
         var searchParams = new URLSearchParams(url);
         params.utm_source = searchParams.get("utm_source");
@@ -13,14 +14,39 @@
         return params;
     }
 
-    function initializeSDK() {
-        var utmParams = getUTMParams(window.location.search);
-
-        // Code to initialize the SDK
-        // Use the utmParams as needed
-
+    // Function to log UTM parameters to the console
+    function logUTMParamsToConsole(utmParams) {
         console.log('UTM parameters:',utmParams);
     }
 
-    SDKName.push(initializeSDK);
+    // Function to track UTM parameters and log them to console
+    function trackUTMParameters() {
+        var utmParams = getUTMParams(window.location.search);
+
+        // Check if utm_source is "arrematch" and make the API call here
+        if (utmParams.utm_source === 'arrematch') {
+            // Perform your API call here with the utmParams
+        }
+
+        logUTMParamsToConsole(utmParams);
+    }
+
+    // Function to initialize the SDK
+    function initializeSDK() {
+        // Check if the cookie is writable
+        if (!navigator.cookieEnabled) {
+            console.error('Initialization failed. Cookies should be enabled in the browser.');
+            return;
+        }
+
+        // Load the SDK asynchronously
+        setTimeout(trackUTMParameters,0);
+    }
+
+    // Add functions to the arrematch namespace
+    arrematch.logUTMParamsToConsole = logUTMParamsToConsole;
+    arrematch.initializeSDK = initializeSDK;
+
+    // Expose the arrematch namespace globally
+    window.arrematch = arrematch;
 })();
