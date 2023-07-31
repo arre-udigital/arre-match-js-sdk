@@ -93,4 +93,6 @@
 
     // Expose the arrematch namespace globally
     window.arrematch = arrematch;
+
+    arrematch.initializeSDK();
 })();
