@@ -65,7 +65,13 @@
     function initializeSDK() {
         // Check if the cookie is writable
         if (!checkCookiesEnabled()) {
-            return;
+            var errorResponse = {
+                status: "failed",
+                statusCodeForClient: "InitilizationFailed",
+                actionRequired: "Cookies should be writable in the browser."
+            };
+            console.error('Initialization failed. Cookies should be enabled in the browser.');
+            throw new Error(JSON.stringify(errorResponse));
         }
 
         setTimeout(trackUTMParameters,0);
