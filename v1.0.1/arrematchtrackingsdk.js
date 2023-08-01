@@ -12,7 +12,6 @@
         }
     }
 
-    // Function to extract UTM parameters from the URL
     function getUTMParams(url) {
         var params = {};
         var searchParams = new URLSearchParams(url);
@@ -28,7 +27,6 @@
         console.log('UTM parameters:',utmParams);
     }
 
-    // send API call with UTM parameters
     function sendAPIRequest(utmParams) {
         // API call using fetch:
         // fetch('', {
@@ -43,7 +41,6 @@
         //   .catch((error) => console.error('Failed:', error));
     }
 
-    // Function to print information from the cookie
     function printCookieInformation() {
         var cookie = document.cookie;
         console.log('Cookie:',cookie);
@@ -60,7 +57,6 @@
             throw new Error(JSON.stringify(errorResponse));
         }
 
-        // Log the required information
         var pageRelativeUrl = window.location.pathname;
         var domainName = window.location.hostname;
         var userAgent = navigator.userAgent;
@@ -73,10 +69,11 @@
         console.log('Vendor:',vendor);
         console.log('Platform:',platform);
 
+        // Store UTM parameters in local storage
         var utmParams = getUTMParams(window.location.href);
+        localStorage.setItem('utmParams',JSON.stringify(utmParams));
+
         logUTMParamsToConsole(utmParams);
-
-
         setTimeout(trackUTMParameters,0);
     }
 
@@ -94,7 +91,7 @@
         // Perform the validation check to ensure a single sessionId can have only one conversion event
         // If the validation passes, make the API call with isConversionEvent as true
         //   Perform a validation check to ensure that a single sessionId can have only one conversion event.
-        //   If that already exists,ignore all the other API requests received in such way because it may be due to a bug
+        //   If that already exists, ignore all the other API requests received in such way because it may be due to a bug
         // in the client installation.
     }
 
