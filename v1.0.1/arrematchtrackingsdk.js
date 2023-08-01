@@ -1,5 +1,3 @@
-// arrematchtrackingsdk.js
-
 (function () {
     var arrematch = window.arrematch || {};
 
@@ -14,6 +12,7 @@
         }
     }
 
+    // Function to extract UTM parameters from the URL
     function getUTMParams(url) {
         var params = {};
         var searchParams = new URLSearchParams(url);
@@ -29,7 +28,9 @@
         console.log('UTM parameters:',utmParams);
     }
 
+    // send API call with UTM parameters
     function sendAPIRequest(utmParams) {
+        // API call using fetch:
         // fetch('', {
         //   method: 'POST',
         //   body: JSON.stringify(utmParams),
@@ -39,44 +40,13 @@
         // })
         //   .then((response) => response.json())
         //   .then((data) => console.log(data))
-        //   .catch((error) => console.error('failed:', error));
+        //   .catch((error) => console.error('Failed:', error));
     }
 
-    //  track UTM parameters and log them to console
-    function trackUTMParameters() {
-        var utmParams = getUTMParams(window.location.href);
-
-        if (utmParams.utm_source === 'arrematch') {
-            sendAPIRequest(utmParams);
-        }
-        logUTMParamsToConsole(utmParams);
-        localStorage.setItem('arrematch_utm_params',JSON.stringify(utmParams));
-    }
-
-    // retrieve UTM parameters from localStorage
-    function retrieveUTMParametersFromStorage() {
-        var storedParams = localStorage.getItem('arrematch_utm_params');
-        if (storedParams) {
-            return JSON.parse(storedParams);
-        }
-        return null;
-    }
-
-    //  print the information in the cookie
+    // Function to print information from the cookie
     function printCookieInformation() {
-        var utmParams = retrieveUTMParametersFromStorage();
-        if (utmParams) {
-            console.log('Information in the cookie:',utmParams);
-        }
-    }
-
-    //  mark conversion event
-    function markConversion() {
-        // Perform the validation check to ensure a single sessionId can have only one conversion event
-        // If the validation passes, make the API call with isConversionEvent as true
-        //   Perform a validation check to ensure that a single sessionId can have only one conversion event.
-        //   If that already exists, ignore all the other API requests received in such way because it may be due to a bug
-        // in the client installation.
+        var cookie = document.cookie;
+        console.log('Cookie:',cookie);
     }
 
     function initializeSDK() {
@@ -90,15 +60,48 @@
             throw new Error(JSON.stringify(errorResponse));
         }
 
+        // Log the required information
+        var pageRelativeUrl = window.location.pathname;
+        var domainName = window.location.hostname;
+        var userAgent = navigator.userAgent;
+        var vendor = navigator.vendor;
+        var platform = navigator.platform;
+
+        console.log('Page Relative URL:',pageRelativeUrl);
+        console.log('Domain Name:',domainName);
+        console.log('User Agent:',userAgent);
+        console.log('Vendor:',vendor);
+        console.log('Platform:',platform);
+
+        var utmParams = getUTMParams(window.location.href);
+        logUTMParamsToConsole(utmParams);
+
+
         setTimeout(trackUTMParameters,0);
     }
 
-    arrematch.logUTMParamsToConsole = logUTMParamsToConsole;
+    function trackUTMParameters() {
+        var utmParams = getUTMParams(window.location.href);
+
+        if (utmParams.utm_source === 'arrematch') {
+            sendAPIRequest(utmParams);
+        }
+
+        logUTMParamsToConsole(utmParams);
+    }
+
+    function markConversion() {
+        // Perform the validation check to ensure a single sessionId can have only one conversion event
+        // If the validation passes, make the API call with isConversionEvent as true
+        //   Perform a validation check to ensure that a single sessionId can have only one conversion event.
+        //   If that already exists,ignore all the other API requests received in such way because it may be due to a bug
+        // in the client installation.
+    }
+
     arrematch.initializeSDK = initializeSDK;
     arrematch.markConversion = markConversion;
     arrematch.printCookieInformation = printCookieInformation;
 
-    // Expose the arrematch namespace globally
     window.arrematch = arrematch;
 
     arrematch.initializeSDK();
