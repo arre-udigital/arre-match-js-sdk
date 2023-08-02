@@ -29,7 +29,7 @@
     }
 
     function sendAPIRequest(utmParams) {
-        // Your API call implementation here...
+        //  API call implementation here...
     }
 
     function trackUTMParameters() {
@@ -59,7 +59,7 @@
     }
 
     function markConversion() {
-        // Your mark conversion implementation here...
+        //  mark conversion implementation here...
     }
 
     function initializeSDK() {
