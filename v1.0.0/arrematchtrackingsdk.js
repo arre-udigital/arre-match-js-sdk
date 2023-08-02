@@ -1,5 +1,6 @@
 (function () {
     var arrematch = window.arrematch || {};
+    var SDKName = 'arrematch'; // Set the SDK name here
 
     function checkCookiesEnabled() {
         try {
@@ -28,6 +29,7 @@
     }
 
     function sendAPIRequest(utmParams) {
+        // Your API call implementation here...
     }
 
     function trackUTMParameters() {
@@ -57,6 +59,7 @@
     }
 
     function markConversion() {
+        // Your mark conversion implementation here...
     }
 
     function initializeSDK() {
@@ -70,7 +73,28 @@
             throw new Error(JSON.stringify(errorResponse));
         }
 
-        setTimeout(trackUTMParameters,0);
+        // Add the following variables to store page information
+        var pageRelativeUrl = window.location.pathname;
+        var domainName = window.location.hostname;
+        var userAgent = navigator.userAgent;
+        var vendor = navigator.vendor;
+        var platform = navigator.platform;
+
+        console.log('Page Relative URL:',pageRelativeUrl);
+        console.log('Domain Name:',domainName);
+        console.log('User Agent:',userAgent);
+        console.log('Vendor:',vendor);
+        console.log('Platform:',platform);
+
+        // Add the tracking function to the SDKName.q queue
+        if (!window[SDKName]) {
+            window[SDKName] = {q: []};
+        }
+        window[SDKName].q.push(function () {
+            trackUTMParameters();
+        });
+
+        // Rest of the initialization code...
     }
 
     arrematch.logUTMParamsToConsole = logUTMParamsToConsole;
@@ -81,5 +105,12 @@
     // Expose the arrematch namespace globally
     window.arrematch = arrematch;
 
-    arrematch.initializeSDK();
+    // Initialize the SDK asynchronously
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded',function () {
+            initializeSDK();
+        });
+    } else {
+        initializeSDK();
+    }
 })();
