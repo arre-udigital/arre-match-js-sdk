@@ -86,7 +86,7 @@
         console.log('User Agent:',userAgent);
         console.log('Vendor:',vendor);
         console.log('Platform:',platform);
-        console.log('User referrer',referrer);
+        console.log('User referrer:',referrer);
 
         // Add the tracking function to the SDKName.q queue
         if (!window[SDKName]) {
