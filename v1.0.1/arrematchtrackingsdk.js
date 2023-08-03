@@ -79,12 +79,14 @@
         var userAgent = navigator.userAgent;
         var vendor = navigator.vendor;
         var platform = navigator.platform;
+        var referrer = document.referrer;
 
-        console.log('Page Relative URL:',pageRelativeUrl);
+        console.log('Page Relative URL:',window.location);
         console.log('Domain Name:',domainName);
         console.log('User Agent:',userAgent);
         console.log('Vendor:',vendor);
         console.log('Platform:',platform);
+        console.log('User referrer',referrer);
 
         // Add the tracking function to the SDKName.q queue
         if (!window[SDKName]) {
