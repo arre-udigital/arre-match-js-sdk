@@ -81,7 +81,7 @@
         var platform = navigator.platform;
         var referrer = document.referrer;
 
-        console.log('Page Relative URL:',window.location);
+        console.log('Page Relative URL:',pageRelativeUrl);
         console.log('Domain Name:',domainName);
         console.log('User Agent:',userAgent);
         console.log('Vendor:',vendor);
